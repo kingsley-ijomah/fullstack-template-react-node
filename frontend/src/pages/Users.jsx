@@ -1,18 +1,30 @@
 import React, {useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Errors from '../components/errors';
 import Nav from '../components/nav';
 
 export default function Users() {
+  const navigate = useNavigate();
+
   const [users, setUsers] = useState([]);
   const [errors, setErrors] = useState({});
 
-  // fetch users from backend
+  // fetch users from backend and handle unauthenticated users
   const fetchUsers = async() => {
     try {
-      const response = await axios.get('http://localhost:4000/api/users');
+      // make request with session token
+      const response = await axios.get('http://localhost:4000/api/users', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('codehance-token')}`,
+        },
+      });
       setUsers(response.data);
     } catch (error) {
+      if (error.response.status === 401) {
+        // redirect to login page
+        navigate('/login');
+      }
       setErrors(error.response);
     }
   };
@@ -25,7 +37,11 @@ export default function Users() {
   // delete user
   const deleteUser = async(id) => {
     try {
-      await axios.delete(`http://localhost:4000/api/users/${id}`);
+      await axios.delete(`http://localhost:4000/api/users/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('codehance-token')}`,
+        },
+      });
       setUsers(users.filter((user) => user.id !== id));
     } catch (error) {
       setErrors(error.response);
@@ -57,6 +73,7 @@ export default function Users() {
               <td>{user.email}</td>
               <td>
                 <button onClick={() => deleteUser(user.id)}>Delete</button>
+                <button onClick={() => navigate(`/users/${user.id}`)}>Edit</button>
               </td>
             </tr>
           ))}

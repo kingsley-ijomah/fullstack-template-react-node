@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Errors from '../components/errors';
 import Nav from '../components/nav';
+import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
+  const navigate = useNavigate();
   // registration form
   const [first_name, setFirstname] = useState('');
   const [last_name, setLastName] = useState('');
@@ -28,7 +30,8 @@ export default function Register() {
     // send user object to backend
     try {
       await axios.post('http://localhost:4000/api/users', user);
-      setErrors({});
+      // redirect to login page
+      navigate('/login');
     } catch (error) {
       setErrors(error.response);
     }
