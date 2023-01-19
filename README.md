@@ -1,10 +1,23 @@
-## Objective
+As you are learning to code, it is important to understand the big picture, how does
+React connect to a backend application on Node, and how can we trace the CRUD (create - read - update - delete) actions all the way from Frontend to Backend.
 
-Give an oveview of connecting react frontend to node backend
+This is the repository that helps you understand that, and we will cover this in detail on: [www.codehance.com](https://www.codehance.com)
 
 ## Backend Setup
 
-> Be sure to have postgresql installed and a database setup with pass e.g:
+Change directory into the backend folder
+
+```
+cd backend
+```
+
+Then run npm install command
+
+```
+npm install --save-dev
+```
+
+> Be sure to have postgresql already installed
 
 Run this in your terminal:
 
@@ -36,7 +49,7 @@ DB_HOST=localhost
 DB_PORT=5432
 ```
 
-Create  a user database record within pgadmin
+Create a user database record within pgadmin
 
 ```
 CREATE EXTENSION pgcrypto WITH SCHEMA public;
@@ -59,4 +72,30 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public."users"
     OWNER to fullstack_user;
+```
+
+Finally start your backend server with:
+
+```
+npm run start
+```
+
+## Frontend Setup
+
+Change into the frontend project
+
+```
+cd frontend
+```
+
+Then run npm install command
+
+```
+npm install --save-dev
+```
+
+Start the server
+
+```
+npm run start
 ```
