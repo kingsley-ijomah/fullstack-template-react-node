@@ -15,8 +15,8 @@ export default function Register() {
   const [errors, setErrors] = useState({});
 
   // handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async(e) => {
+    e.preventDefault(); // prevent page refresh
 
     // create user object
     const user = {
