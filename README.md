@@ -47,6 +47,10 @@ DB_PASSWORD=fullstack_user@*
 DB_NAME=fullstack_dev
 DB_HOST=localhost
 DB_PORT=5432
+
+COOKIE_NAME=fullstack-dev-session
+COOKIE_SECRET=add-a-super-secret-string-here
+JWT_SECRET=super-secretive-token-string-here
 ```
 
 Create a user database record within pgadmin
