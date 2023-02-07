@@ -30,3 +30,39 @@ exports.active = async (token) => {
   const { rows } = await db.query('SELECT * FROM "users" WHERE id = $1', [decoded.id]);
   return rows[0];
 };
+
+exports.forgotPassword = async (body) => {
+  const { email } = body;
+
+  // find user
+  const { rows } = await db.query('SELECT * FROM "users" WHERE email = $1', [email]);
+  if (rows.length === 0) {
+    throw new Error('Email does not exist');
+  }
+
+  // generate token
+  const token = jwt.sign({ id: rows[0].id }, process.env.JWT_SECRET, {
+    expiresIn: 86400, // 24 hours
+  });
+
+  return token;
+};
+
+exports.resetPassword = async (token, body) => {
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  const { password, confirm_password } = body;
+
+  // check if passwords match
+  if (password !== confirm_password) {
+    throw new Error('Passwords do not match');
+  }
+
+  // hash password
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const { rows } = await db.query(
+    'UPDATE "users" SET password = $1 WHERE id = $2 RETURNING *',
+    [hashedPassword, decoded.id]
+  );
+  return rows[0];
+};
