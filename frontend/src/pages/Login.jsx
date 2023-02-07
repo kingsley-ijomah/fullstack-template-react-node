@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Errors from '../components/errors';
 import { Link } from 'react-router-dom';
+import Nav from '../components/nav';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -39,6 +40,8 @@ export default function Login() {
 
   return (
     <div>
+      <Nav />
+      
       <h1>Login</h1>
 
       <Errors errors={errors} />
