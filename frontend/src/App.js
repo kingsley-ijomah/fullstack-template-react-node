@@ -7,6 +7,8 @@ import Users from './pages/Users';
 import Login from './pages/Login';
 import Logout from './pages/Logout';
 import EditUser from './pages/EditUser';
+import ForgotPasssword from './pages/ForgotPasssword';
+import ResetPasssword from './pages/ResetPasssword';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -32,8 +34,10 @@ function App() {
         <>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPasssword />} />
         </>
       }
+      <Route path="/reset-password" element={<ResetPasssword />} />
 
       {/* {loggedIn ? null : <Route path="/register" element={<Register />} />} */}
     </Routes>

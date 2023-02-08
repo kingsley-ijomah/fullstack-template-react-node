@@ -32,10 +32,11 @@ exports.active = async (token) => {
 };
 
 exports.forgotPassword = async (body) => {
+  
   const { email } = body;
-
-  // find user
-  const { rows } = await db.query('SELECT * FROM "users" WHERE email = $1', [email]);
+  
+  // // find user
+  const { rows } = await db.query('SELECT * FROM users WHERE email = $1', [email]);
   if (rows.length === 0) {
     throw new Error('Email does not exist');
   }
@@ -50,10 +51,10 @@ exports.forgotPassword = async (body) => {
 
 exports.resetPassword = async (token, body) => {
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  const { password, confirm_password } = body;
+  const { password, confirmPassword } = body;
 
   // check if passwords match
-  if (password !== confirm_password) {
+  if (password !== confirmPassword) {
     throw new Error('Passwords do not match');
   }
 

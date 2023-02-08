@@ -54,6 +54,7 @@ export default function Login() {
             id="email"
             value={email}
             placeholder="Email"
+            autoComplete="off"
             onChange={(e) => setEmail(e.target.value)}
           />
         </p>
@@ -65,6 +66,7 @@ export default function Login() {
             id="password"
             value={password}
             placeholder="Password"
+            autoComplete="off"
             onChange={(e) => setPassword(e.target.value)}
           />
         </p>
@@ -73,7 +75,7 @@ export default function Login() {
           <button type="submit">Login</button>
         </p>
       </form>
-      <p>Don't have an account? <Link to='/register'>Register Here</Link></p>
+      <p>Don't have an account? <Link to='/register'>Register Here</Link> or <Link to='/forgot-password'>Forgot Password?</Link></p>
     </div>
   );
 }

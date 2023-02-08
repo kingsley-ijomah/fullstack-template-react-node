@@ -11,14 +11,11 @@ exports.loginAuth = async (req, res) => {
       token: token,
     });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(400).json(error.message);
   }
 };
 
-exports.logoutAuth = async (req, res) => {
-  req.session = null;
-  return res.status(200).send({ message: 'User logged out successfully!' });
-};
+// logout is handled by frontend
 
 exports.activeAuth = async (req, res) => {
   try {
@@ -29,23 +26,32 @@ exports.activeAuth = async (req, res) => {
       user: user,
     });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(400).json(error.message);
   }
 };
 
 exports.forgotPasswordAuth = async (req, res) => {
   try {
     const token = await authServices.forgotPassword(req.body);
+    const url = `${process.env.SENDGRID_DOMAIN}/reset-password/?token=${token}`;
 
     const msg = {
       to: req.body.email,
-      from: process.env.SENDGRID_API_KEY, // Use the email address or domain you verified with sendgrid
-      subject: 'Reset Password',
-      text: 'Reset Password',
+      from: process.env.SENDGRID_EMAIL, // Use the email address or domain you verified with sendgrid
+      subject: 'Reset Password Request',
+      text: 'Reset Password Request',
       html: `
-        <h1>Reset Password</h1>
-        <p>Click the link below to reset your password</p>
-        <a href="${process.env.SENDGRID_DOMAIN}/reset-password/${token}">Reset Password</a>
+        <h3>Reset Password</h3>
+        <p>You are receiving this email because you (or someone else) have requested the reset of the password for your account.</p>
+        <p>Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:</p>
+        <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
+
+        <a href="${url}">${url}</a>
+
+        <p>Thanks,</p>
+        <p>Dev Team</p>
+
+        <p>NOTE: This is an automated email, please do not reply to this email.</p>
       `,
     };
 
@@ -55,7 +61,7 @@ exports.forgotPasswordAuth = async (req, res) => {
       message: 'Email sent successfully!',
     });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(400).json(error.message);
   }
 };
 
@@ -67,6 +73,6 @@ exports.resetPasswordAuth = async (req, res) => {
       message: 'Password reset successfully!',
     });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(400).json(error.message);
   }
 };
