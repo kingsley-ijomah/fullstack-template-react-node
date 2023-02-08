@@ -106,3 +106,19 @@ Start the server
 ```
 npm run start
 ```
+
+Remember Me:
+
+```
+When the user logs in, generate a JWT token and send it back to the client.
+
+Store the JWT token in the localStorage in the client's browser.
+
+When the user visits the site again, check the value of the rememberMe cookie. If the value of the rememberMe cookie is true, retrieve the JWT token from the localStorage and send it in the Authorization header of each API request.
+
+If the value of the rememberMe cookie is false, prompt the user to log in again. If the user logs in successfully, generate a new JWT token and store it in the localStorage again.
+
+On the server, validate the JWT token with each API request. If the token is valid, allow the API request to proceed. If the token is invalid, return a 401 Unauthorized response.
+
+By using this approach, the user will only need to re-authenticate if the rememberMe cookie is false. If the rememberMe cookie is true, the user will stay logged in across multiple visits to the site, without having to re-authenticate with each API request.
+```
