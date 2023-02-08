@@ -52,6 +52,8 @@ COOKIE_NAME=fullstack-dev-session
 COOKIE_SECRET=add-a-super-secret-string-here
 JWT_SECRET=super-secretive-token-string-here
 SENDGRID_API_KEY=your-sendgrid-api-key-here
+SENDGRID_EMAIL=email@domain.com
+SENDGRID_DOMAIN=http://localhost:3000
 ```
 
 Create a user database record within pgadmin
