@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Errors from '../components/errors';
+import axiosInstance from '../lib/axiosInstance';
 
 export default function EditUser() {
   const navigate = useNavigate(); // navigate to other pages
@@ -14,14 +14,8 @@ export default function EditUser() {
 
   const fetchUser = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:4000/api/users/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('codehance-token')}`,
-          },
-        }
-      );
+      const response = await axiosInstance.get(`/users/${id}`);
+
       setFirstName(response.data.first_name);
       setLastName(response.data.last_name);
       setEmail(response.data.email);
@@ -32,7 +26,7 @@ export default function EditUser() {
 
   useEffect(() => {
     fetchUser();
-  }, []);
+  });
 
   const editUser = async (e) => {
     e.preventDefault();
@@ -44,11 +38,7 @@ export default function EditUser() {
     };
 
     try {
-      await axios.put(`http://localhost:4000/api/users/${id}`, user, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('codehance-token')}`,
-        },
-      });
+      await axiosInstance.put(`/users/${id}`, user);
       navigate('/users');
     } catch (error) {
       setErrors(error.response);

@@ -2,11 +2,9 @@ import React from 'react'
 import Nav from '../components/nav'
 import Errors from '../components/errors'
 import { useState } from 'react'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import axiosInstance from '../lib/axiosInstance'
 
 export default function ForgotPasssword() {
-  const navigate = useNavigate()
 
   const [email, setEmail] = useState('')
   const [errors, setErrors] = useState({})
@@ -25,10 +23,7 @@ export default function ForgotPasssword() {
 
     try {
       // send user object to backend
-      const response = await axios.post(
-        'http://localhost:4000/api/forgot-password',
-        user
-      )
+      const response = await axiosInstance.post('/forgot-password', user)
 
       setMessage(response.data.message)
       setLoading(false)

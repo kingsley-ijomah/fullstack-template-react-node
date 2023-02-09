@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import Errors from '../components/errors';
 import { Link } from 'react-router-dom';
 import Nav from '../components/nav';
+import axiosInstance from '../lib/axiosInstance';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -23,13 +23,11 @@ export default function Login() {
 
     try {
       // send user object to backend
-      const response = await axios.post(
-        'http://localhost:4000/api/login',
-        user
-      );
+      const response = await axiosInstance.post('/login', user);
 
-      // save token to local storage
-      localStorage.setItem('codehance-token', response.data.token);
+      // save token to local storage, this will be removed on window close or logout
+      // read code in frontend/src/pages/Logout.jsx to see how to remove token on window close
+      localStorage.setItem('codehance-token', response.data.token); // short lived
 
       // redirect to users page
       navigate('/users');

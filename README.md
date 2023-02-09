@@ -109,14 +109,14 @@ npm run start
 
 ### Remember Me Processs
 
-When the user logs in, generate a JWT token and send it back to the client.
+In an API without a session, you can implement "remember me" functionality by using JSON Web Tokens (JWTs) and cookies.
 
-Store the JWT token in the localStorage in the client's browser.
+When a user logs in and chooses not to be remembered (i.e., rememberMe is set to false), the API can return a JWT in the response that can be stored in localStorage. This JWT can be used to authenticate subsequent requests made by the user during the current session.
 
-When the user visits the site again, check the value of the rememberMe cookie. If the value of the rememberMe cookie is true, retrieve the JWT token from the localStorage and send it in the Authorization header of each API request.
+When the user closes the browser or the session expires, the JWT stored in localStorage will also be deleted. The next time the user visits the site, they will have to log in again and a new JWT will be issued.
 
-If the value of the rememberMe cookie is false, prompt the user to log in again. If the user logs in successfully, generate a new JWT token and store it in the localStorage again.
+However, if the user chooses to be remembered (i.e., rememberMe is set to true), the API can also set a cookie on the user's browser with a long expiration time. The value of the cookie can be a unique identifier for the user.
 
-On the server, validate the JWT token with each API request. If the token is valid, allow the API request to proceed. If the token is invalid, return a 401 Unauthorized response.
+On subsequent visits, the API can check for the presence of this cookie and use the value of the cookie to retrieve the user's JWT from the server. The JWT can then be stored in localStorage and used to authenticate subsequent requests made by the user during the current session.
 
-By using this approach, the user will only need to re-authenticate if the rememberMe cookie is false. If the rememberMe cookie is true, the user will stay logged in across multiple visits to the site, without having to re-authenticate with each API request.
+In this way, the user can remain logged in between visits as long as the rememberMe cookie is present and the JWT stored on the server has not expired. However, the user will still need to authenticate with each new session (i.e., when the browser is closed and re-opened).

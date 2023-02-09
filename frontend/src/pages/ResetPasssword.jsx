@@ -2,8 +2,8 @@ import React from 'react'
 import Nav from '../components/nav'
 import Errors from '../components/errors'
 import { useState } from 'react'
-import axios from 'axios'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import axiosInstance from '../lib/axiosInstance';
 
 export default function ForgotPasssword() {
   const navigate = useNavigate()
@@ -27,8 +27,8 @@ export default function ForgotPasssword() {
     }
 
     try {
-      const response = await axios.post(
-        `http://localhost:4000/api/reset-password/${searchParams.get('token')}`,
+      const response = await axiosInstance.post(
+        `/reset-password/${searchParams.get('token')}`,
         user
       )
       setMessage(response.data.message)

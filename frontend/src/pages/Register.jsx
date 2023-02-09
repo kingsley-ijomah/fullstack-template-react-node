@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import Errors from '../components/errors';
 import Nav from '../components/nav';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../lib/axiosInstance';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ export default function Register() {
 
     // send user object to backend
     try {
-      await axios.post('http://localhost:4000/api/users', user);
+      await axiosInstance.post('/users', user);
       // redirect to login page
       navigate('/login');
     } catch (error) {

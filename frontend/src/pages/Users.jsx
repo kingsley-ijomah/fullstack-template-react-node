@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import Errors from '../components/errors';
 import Nav from '../components/nav';
+import axiosInstance from '../lib/axiosInstance';
 
 export default function Users() {
   const navigate = useNavigate();
@@ -10,15 +10,9 @@ export default function Users() {
   const [users, setUsers] = useState([]);
   const [errors, setErrors] = useState({});
 
-  // fetch users from backend and handle unauthenticated users
   const fetchUsers = async() => {
     try {
-      // make request with session token
-      const response = await axios.get('http://localhost:4000/api/users', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('codehance-token')}`,
-        },
-      });
+      const response = await axiosInstance.get('/users');
       setUsers(response.data);
     } catch (error) {
       if (error.response.status === 401) {
@@ -32,16 +26,12 @@ export default function Users() {
   // fetch users on component mount
   useEffect(() => {
     fetchUsers();
-  }, []);
+  });
 
   // delete user
   const deleteUser = async(id) => {
     try {
-      await axios.delete(`http://localhost:4000/api/users/${id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('codehance-token')}`,
-        },
-      });
+      await axiosInstance.delete(`/users/${id}`);
       setUsers(users.filter((user) => user.id !== id));
     } catch (error) {
       setErrors(error.response);
