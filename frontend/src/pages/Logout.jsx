@@ -9,19 +9,6 @@ export default function Logout() {
   useEffect(() => {
     localStorage.removeItem('codehance-token') // move to .env
     navigate('/')
-  }, [navigate])
-
-  // remove token from local storage on window close
-  useEffect(() => {
-    window.addEventListener('beforeunload', () => {
-      localStorage.removeItem('codehance-token')
-    })
-
-    return () => {
-      window.removeEventListener('beforeunload', () => {
-        localStorage.removeItem('codehance-token')
-      })
-    }
   }, [])
 
   return (

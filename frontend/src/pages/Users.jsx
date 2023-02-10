@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Errors from '../components/errors';
 import Nav from '../components/nav';
-import axiosInstance from '../lib/axiosInstance';
+import useFetch from '../lib/useFetch';
 
 export default function Users() {
   const navigate = useNavigate();
@@ -10,39 +10,32 @@ export default function Users() {
   const [users, setUsers] = useState([]);
   const [errors, setErrors] = useState({});
 
-  const fetchUsers = async() => {
-    try {
-      const response = await axiosInstance.get('/users');
-      setUsers(response.data);
-    } catch (error) {
-      if (error.response.status === 401) {
-        // redirect to login page
-        navigate('/login');
-      }
-      setErrors(error.response);
+  // use useFetch hook to make request to get all users
+  // on success, set users
+  // on failure, set errors
+  const [handleFetch] = useFetch(
+    '/users',
+    'GET',
+    (fetchedUsers) => {
+      setUsers(fetchedUsers);
+    },
+    (fetchErrors) => {
+      setErrors(fetchErrors);
     }
-  };
+  );
 
-  // fetch users on component mount
+  // fetch users on mount
   useEffect(() => {
-    fetchUsers();
-  });
-
-  // delete user
-  const deleteUser = async(id) => {
-    try {
-      await axiosInstance.delete(`/users/${id}`);
-      setUsers(users.filter((user) => user.id !== id));
-    } catch (error) {
-      setErrors(error.response);
-    }
-  };
+    handleFetch();
+  }, []);
 
   return (
     <>
       <Nav />
 
-      <h2 style={{textDecoration: 'underline'}}>List of users from backend</h2>
+      <h2 style={{ textDecoration: 'underline' }}>
+        List of users from backend
+      </h2>
 
       <Errors errors={errors} />
 
@@ -62,8 +55,10 @@ export default function Users() {
               <td>{user.last_name}</td>
               <td>{user.email}</td>
               <td>
-                <button onClick={() => deleteUser(user.id)}>Delete</button>
-                <button onClick={() => navigate(`/users/${user.id}`)}>Edit</button>
+                <button onClick={() => navigate(`/delete-user/${user.id}`)}>Delete</button>
+                <button onClick={() => navigate(`/users/${user.id}`)}>
+                  Edit
+                </button>
               </td>
             </tr>
           ))}

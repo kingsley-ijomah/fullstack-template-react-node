@@ -53,6 +53,11 @@ exports.resetPassword = async (token, body) => {
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
   const { password, confirmPassword } = body;
 
+  // check if password is empty
+  if (!password || !confirmPassword) {
+    throw new Error('Password cannot be empty');
+  }
+
   // check if passwords match
   if (password !== confirmPassword) {
     throw new Error('Passwords do not match');

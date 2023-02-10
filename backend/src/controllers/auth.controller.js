@@ -33,11 +33,11 @@ exports.activeAuth = async (req, res) => {
 exports.forgotPasswordAuth = async (req, res) => {
   try {
     const token = await authServices.forgotPassword(req.body);
-    const url = `${process.env.SENDGRID_DOMAIN}/reset-password/?token=${token}`;
+    const url = `${process.env.FRONTEND_DOMAIN}/reset-password/?token=${token}`;
 
     const msg = {
       to: req.body.email,
-      from: process.env.SENDGRID_EMAIL, // Use the email address or domain you verified with sendgrid
+      from: process.env.FROM_EMAIL, // Use the email address or domain you verified with sendgrid
       subject: 'Reset Password Request',
       text: 'Reset Password Request',
       html: `

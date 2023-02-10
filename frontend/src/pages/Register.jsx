@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Errors from '../components/errors';
 import Nav from '../components/nav';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../lib/axiosInstance';
+import useFetch from '../lib/useFetch';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -13,6 +13,20 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [confirm_password, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
+
+  // use useFetch hook to make request to register user
+  // on success, navigate to login page
+  // on failure, set errors
+  const [handleFetch] = useFetch(
+    '/users',
+    'POST',
+    () => {
+      navigate('/login');
+    },
+    (fetchErrors) => {
+      setErrors(fetchErrors);
+    }
+  );
 
   // handle form submission
   const handleSubmit = async(e) => {
@@ -27,14 +41,8 @@ export default function Register() {
       confirm_password,
     };
 
-    // send user object to backend
-    try {
-      await axiosInstance.post('/users', user);
-      // redirect to login page
-      navigate('/login');
-    } catch (error) {
-      setErrors(error.response);
-    }
+    // make request
+    handleFetch(user);
   };
 
   return (

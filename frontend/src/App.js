@@ -9,6 +9,7 @@ import Logout from './pages/Logout';
 import EditUser from './pages/EditUser';
 import ForgotPasssword from './pages/ForgotPasssword';
 import ResetPasssword from './pages/ResetPasssword';
+import DeleteUser from './pages/DeleteUser';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -29,6 +30,7 @@ function App() {
           <Route path="/users" element={<Users />} />
           <Route path="/users/:id" element={<EditUser />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/delete-user/:id" element={<DeleteUser />} />
         </>
       } else {
         <>

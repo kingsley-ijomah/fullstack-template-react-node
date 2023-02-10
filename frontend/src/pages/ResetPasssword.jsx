@@ -1,44 +1,44 @@
-import React from 'react'
-import Nav from '../components/nav'
-import Errors from '../components/errors'
-import { useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
-import axiosInstance from '../lib/axiosInstance';
+import React from 'react';
+import Nav from '../components/nav';
+import Errors from '../components/errors';
+import { useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import useFetch from '../lib/useFetch';
 
 export default function ForgotPasssword() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [errors, setErrors] = useState({})
-  const [message, setMessage] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [errors, setErrors] = useState({});
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
   const [searchParams] = useSearchParams();
 
+  // use useFetch hook to make request to reset password
+  // on success, navigate to login page
+  // on failure, set errors
+  const [handleFetch] = useFetch(
+    `/reset-password/${searchParams.get('token')}`,
+    'POST',
+    (response) => {
+      setMessage(response.message);
+      setLoading(false);
+      navigate('/login');
+    },
+    (error) => {
+      setErrors(error);
+      setLoading(false);
+    }
+  );
+
   const handleSubmit = async (e) => {
-    e.preventDefault()
-
-    setLoading(true)
-
-    // create user object
-    const user = {
-      password,
-      confirmPassword,
-    }
-
-    try {
-      const response = await axiosInstance.post(
-        `/reset-password/${searchParams.get('token')}`,
-        user
-      )
-      setMessage(response.data.message)
-      setLoading(false)
-      navigate('/login')
-    } catch (error) {
-      setErrors(error.response)
-      setLoading(false)
-    }
-  }
+    e.preventDefault();
+    // set loading state
+    setLoading(true);
+    // make request
+    handleFetch({ password, confirmPassword });
+  };
 
   return (
     <>
@@ -82,5 +82,5 @@ export default function ForgotPasssword() {
         </p>
       </form>
     </>
-  )
+  );
 }

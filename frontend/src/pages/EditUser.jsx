@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Errors from '../components/errors';
 import axiosInstance from '../lib/axiosInstance';
+import useFetch from '../lib/useFetch';
 
 export default function EditUser() {
   const navigate = useNavigate(); // navigate to other pages
@@ -12,45 +13,60 @@ export default function EditUser() {
   const [errors, setErrors] = useState({});
   const { id } = useParams(); // get id from url
 
-  const fetchUser = async () => {
-    try {
-      const response = await axiosInstance.get(`/users/${id}`);
-
-      setFirstName(response.data.first_name);
-      setLastName(response.data.last_name);
-      setEmail(response.data.email);
-    } catch (error) {
-      setErrors(error.response);
+  // use useFetch hook to make request to get user
+  // on success, set user data
+  // on failure, set errors
+  const [handleFetch] = useFetch(
+    `/users/${id}`,
+    'GET',
+    (response) => {
+      setFirstName(response.first_name);
+      setLastName(response.last_name);
+      setEmail(response.email);
+    },
+    (fetchErrors) => {
+      setErrors(fetchErrors);
     }
-  };
+  );
 
+  // call handleFetch on component mount
   useEffect(() => {
-    fetchUser();
-  });
+    handleFetch();
+  }, []);
 
-  const editUser = async (e) => {
+  // make request to edit user
+  // on success, navigate to users page
+  // on failure, set errors
+  const [handleEdit] = useFetch(
+    `/users/${id}`,
+    'PUT',
+    () => {
+      navigate('/users');
+    },
+    (fetchErrors) => {
+      setErrors(fetchErrors);
+    }
+  );
+
+  const onSubmit = async (e) => {
     e.preventDefault();
-
+    // build user object
     const user = {
       first_name,
       last_name,
       email,
     };
-
-    try {
-      await axiosInstance.put(`/users/${id}`, user);
-      navigate('/users');
-    } catch (error) {
-      setErrors(error.response);
-    }
+    // make request
+    handleEdit(user);
   };
+  
   return (
     <>
       <h2 style={{ textDecoration: 'underline' }}>Edit User</h2>
 
       <Errors errors={errors} />
 
-      <form onSubmit={editUser}>
+      <form onSubmit={onSubmit}>
         <p>
           <input
             placeholder="Firstname"

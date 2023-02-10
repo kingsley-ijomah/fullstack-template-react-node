@@ -2,7 +2,7 @@ import React from 'react'
 import Nav from '../components/nav'
 import Errors from '../components/errors'
 import { useState } from 'react'
-import axiosInstance from '../lib/axiosInstance'
+import useFetch from '../lib/useFetch'
 
 export default function ForgotPasssword() {
 
@@ -11,26 +11,25 @@ export default function ForgotPasssword() {
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
 
+  const [handleFetch] = useFetch(
+    '/forgot-password',
+    'POST',
+    (response) => {
+      setMessage(response.message)
+    },
+    (fetchErrors) => {
+      setErrors(fetchErrors)
+    }
+  );
+
   const handleSubmit = async (e) => {
     e.preventDefault()
-
+    // set loading to true
     setLoading(true)
-
-    // create user object
-    const user = {
-      email,
-    }
-
-    try {
-      // send user object to backend
-      const response = await axiosInstance.post('/forgot-password', user)
-
-      setMessage(response.data.message)
-      setLoading(false)
-    } catch (error) {
-      setErrors(error.response.data)
-      setLoading(false)
-    }
+    // make request
+    handleFetch({ email })
+    // set loading to false
+    setLoading(false)
   }
 
   return (

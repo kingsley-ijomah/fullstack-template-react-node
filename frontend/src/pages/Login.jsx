@@ -4,6 +4,7 @@ import Errors from '../components/errors';
 import { Link } from 'react-router-dom';
 import Nav from '../components/nav';
 import axiosInstance from '../lib/axiosInstance';
+import useFetch from '../lib/useFetch';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -12,28 +13,26 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // create user object
-    const user = {
-      email,
-      password,
-    };
-
-    try {
-      // send user object to backend
-      const response = await axiosInstance.post('/login', user);
-
-      // save token to local storage, this will be removed on window close or logout
-      // read code in frontend/src/pages/Logout.jsx to see how to remove token on window close
-      localStorage.setItem('codehance-token', response.data.token); // short lived
-
-      // redirect to users page
+  // use useFetch hook to make request to login user
+  // on success, navigate to users page
+  // on failure, set errors
+  const [handleFetch] = useFetch(
+    '/login',
+    'POST',
+    (response) => {
+      localStorage.setItem('codehance-token', response.token);
       navigate('/users');
-    } catch (error) {
-      setErrors(error.response);
+    },
+    (fetchErrors) => {
+      setErrors(fetchErrors);
     }
+  );
+
+  const handleSubmit = async (e) => {
+    // prevent page refresh
+    e.preventDefault(); 
+    // make request
+    handleFetch({ email, password});
   };
 
   return (
