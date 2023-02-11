@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { setCookie, removeCookie, getCookie } from './Cookie';
+import { setCookie, removeCookie, getCookie, isTokenExpired } from './Cookie';
 import { AuthContext } from '../contexts/AuthContext';
 
 const KEY = 'token';
@@ -20,7 +20,15 @@ const useAuth = () => {
   };
 
   const isSignedIn = () => {
-    return !!token;
+    if (isExpired(token)) {
+      signOut();
+      return false;
+    }
+    return true;
+  };
+
+  const isExpired = (token) => {
+    return (token ? true : false) && isTokenExpired(token);
   };
 
   return { token, isSignedIn, signIn, signOut };
