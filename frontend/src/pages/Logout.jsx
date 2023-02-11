@@ -10,7 +10,7 @@ export default function Logout() {
   // remove token from local storage on component mount
   useEffect(() => {
     signOut()
-    navigate('/')
+    navigate('/login')
   }, [])
 
   return (

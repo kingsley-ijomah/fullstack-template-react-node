@@ -13,7 +13,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
 
-  const { signIn } = useAuth();
+  const { signIn, rememberMe, setRememberMe } = useAuth();
 
   // use useFetch hook to make request to login user
   // on success, navigate to users page
@@ -33,6 +33,8 @@ export default function Login() {
   const handleSubmit = async (e) => {
     // prevent page refresh
     e.preventDefault();
+    // save remembe me cookie
+    setRememberMe(rememberMe);
     // make request
     handleFetch({ email, password });
   };
@@ -72,6 +74,19 @@ export default function Login() {
 
         <p>
           <button type="submit">Login</button>
+        </p>
+
+        <p>
+          <label>
+            <input
+              type="checkbox"
+              name="rememberMe"
+              id="rememberMe"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+            />
+            Remember Me
+          </label>
         </p>
       </form>
       <p>
