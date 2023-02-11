@@ -12,6 +12,7 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm_password, setConfirmPassword] = useState('');
+  const [accept_terms, setAcceptTerms] = useState(false);
   const [errors, setErrors] = useState({});
 
   // use useFetch hook to make request to register user
@@ -107,7 +108,19 @@ export default function Register() {
         </p>
 
         <p>
-          <button type="submit">Register</button>
+          <input
+            type="checkbox"
+            id="accept_terms"
+            checked={accept_terms}
+            onChange={(e) => setAcceptTerms(e.target.checked)}
+          />
+          <label htmlFor="accept_terms">I accept the terms of service</label>
+        </p>
+
+        <p>
+          <button type="submit" disabled={!accept_terms}>
+            Register
+          </button>
         </p>
       </form>
     </>
