@@ -114,7 +114,7 @@ export default function Register() {
             checked={accept_terms}
             onChange={(e) => setAcceptTerms(e.target.checked)}
           />
-          <label htmlFor="accept_terms">I accept the terms of service</label>
+          <label htmlFor="accept_terms">I accept the <a href="#">terms of service</a></label>
         </p>
 
         <p>
