@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Errors from '../components/errors';
 import { Link } from 'react-router-dom';
 import Nav from '../components/nav';
-import axiosInstance from '../lib/axiosInstance';
 import useFetch from '../lib/useFetch';
+import useAuth from '../lib/useAuth';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -13,6 +13,8 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
 
+  const { signIn } = useAuth();
+
   // use useFetch hook to make request to login user
   // on success, navigate to users page
   // on failure, set errors
@@ -20,8 +22,8 @@ export default function Login() {
     '/login',
     'POST',
     (response) => {
-      localStorage.setItem('codehance-token', response.token);
-      navigate('/users');
+      signIn(response.token);
+      navigate('/');
     },
     (fetchErrors) => {
       setErrors(fetchErrors);
@@ -30,15 +32,15 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     // prevent page refresh
-    e.preventDefault(); 
+    e.preventDefault();
     // make request
-    handleFetch({ email, password});
+    handleFetch({ email, password });
   };
 
   return (
     <div>
       <Nav />
-      
+
       <h1>Login</h1>
 
       <Errors errors={errors} />
@@ -72,7 +74,10 @@ export default function Login() {
           <button type="submit">Login</button>
         </p>
       </form>
-      <p>Don't have an account? <Link to='/register'>Register Here</Link> or <Link to='/forgot-password'>Forgot Password?</Link></p>
+      <p>
+        Don't have an account? <Link to="/register">Register Here</Link> or{' '}
+        <Link to="/forgot-password">Forgot Password?</Link>
+      </p>
     </div>
   );
 }

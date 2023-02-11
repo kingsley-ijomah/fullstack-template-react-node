@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Errors from '../components/errors';
-import axiosInstance from '../lib/axiosInstance';
 import useFetch from '../lib/useFetch';
 
 export default function EditUser() {
