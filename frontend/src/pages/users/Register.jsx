@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Errors from '../components/errors';
-import Nav from '../components/nav';
+import Errors from '../../components/errors';
+import Nav from '../../components/nav';
 import { useNavigate } from 'react-router-dom';
-import useFetch from '../lib/useFetch';
+import useFetch from '../../lib/useFetch';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ export default function Register() {
   );
 
   // handle form submission
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page refresh
 
     // create user object
@@ -114,7 +114,9 @@ export default function Register() {
             checked={accept_terms}
             onChange={(e) => setAcceptTerms(e.target.checked)}
           />
-          <label htmlFor="accept_terms">I accept the <a href="#">terms of service</a></label>
+          <label htmlFor="accept_terms">
+            I accept the <a href="#">terms of service</a>
+          </label>
         </p>
 
         <p>

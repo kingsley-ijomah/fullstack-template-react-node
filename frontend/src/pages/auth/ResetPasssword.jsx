@@ -1,9 +1,9 @@
 import React from 'react';
-import Nav from '../components/nav';
-import Errors from '../components/errors';
+import Nav from '../../components/nav';
+import Errors from '../../components/errors';
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import useFetch from '../lib/useFetch';
+import useFetch from '../../lib/useFetch';
 
 export default function ForgotPasssword() {
   const navigate = useNavigate();

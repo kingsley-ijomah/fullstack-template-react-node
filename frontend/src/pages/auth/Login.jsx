@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Errors from '../components/errors';
+import Errors from '../../components/errors';
 import { Link } from 'react-router-dom';
-import Nav from '../components/nav';
-import useFetch from '../lib/useFetch';
-import useAuth from '../lib/useAuth';
+import Nav from '../../components/nav';
+import useFetch from '../../lib/useFetch';
+import useAuth from '../../lib/useAuth';
 
 export default function Login() {
   const navigate = useNavigate();

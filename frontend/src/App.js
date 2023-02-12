@@ -1,14 +1,14 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home';
-import Register from './pages/Register';
-import Users from './pages/Users';
-import Login from './pages/Login';
-import Logout from './pages/Logout';
-import EditUser from './pages/EditUser';
-import ForgotPasssword from './pages/ForgotPasssword';
-import ResetPasssword from './pages/ResetPasssword';
-import DeleteUser from './pages/DeleteUser';
+import Register from './pages/users/Register';
+import Users from './pages/users/Users';
+import Login from './pages/auth/Login';
+import Logout from './pages/auth/Logout';
+import EditUser from './pages/users/EditUser';
+import ForgotPasssword from './pages/auth/ForgotPasssword';
+import ResetPasssword from './pages/auth/ResetPasssword';
+import DeleteUser from './pages/users/DeleteUser';
 import PrivateRoute from './lib/PrivateRoute';
 import AuthProvider from './contexts/AuthContext';
 

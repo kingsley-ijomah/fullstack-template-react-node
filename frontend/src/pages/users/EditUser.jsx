@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Errors from '../components/errors';
-import useFetch from '../lib/useFetch';
+import Errors from '../../components/errors';
+import useFetch from '../../lib/useFetch';
 
 export default function EditUser() {
   const navigate = useNavigate(); // navigate to other pages
@@ -58,7 +58,7 @@ export default function EditUser() {
     // make request
     handleEdit(user);
   };
-  
+
   return (
     <>
       <h2 style={{ textDecoration: 'underline' }}>Edit User</h2>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Errors from '../components/errors';
-import Nav from '../components/nav';
-import useFetch from '../lib/useFetch';
+import Errors from '../../components/errors';
+import Nav from '../../components/nav';
+import useFetch from '../../lib/useFetch';
 
 export default function Users() {
   const navigate = useNavigate();
@@ -55,7 +55,9 @@ export default function Users() {
               <td>{user.last_name}</td>
               <td>{user.email}</td>
               <td>
-                <button onClick={() => navigate(`/delete-user/${user.id}`)}>Delete</button>
+                <button onClick={() => navigate(`/delete-user/${user.id}`)}>
+                  Delete
+                </button>
                 <button onClick={() => navigate(`/users/${user.id}`)}>
                   Edit
                 </button>
