@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { setCookie, removeCookie, getCookie, isTokenExpired } from './Cookie';
 import { AuthContext } from '../contexts/AuthContext';
 
@@ -29,7 +29,7 @@ const useAuth = () => {
   };
 
   const isSignedIn = () => {
-    if (isExpired(token)) {
+    if (isExpired(token) || !token) {
       signOut();
       return false;
     }

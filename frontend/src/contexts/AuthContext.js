@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React from "react";
 import useAuth from '../lib/useAuth'
 
 export const AuthContext = React.createContext({
