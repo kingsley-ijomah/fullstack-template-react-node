@@ -8,10 +8,9 @@ export default function Nav() {
   return (
     <div>
       <Link to="/">Home</Link>
-      {!isSignedIn ? null : <Link to="/users"> | Users</Link>}
-      {isSignedIn ? null : <Link to="/register"> | Register</Link>}
-      {isSignedIn ? null : <Link to="/login"> | Login</Link>}
-      {!isSignedIn ? null : <Link to="/logout"> | Logout</Link>}
+      {!isSignedIn() ? null : <Link to="/users"> | Users</Link>}
+      {isSignedIn() ? null : <Link to="/register"> | Register</Link>}
+      {!isSignedIn() ? <Link to="/login"> | Login</Link> : <Link to="/logout"> | Logout</Link>}
     </div>
   );
 }
