@@ -4,6 +4,8 @@ import { AuthContext } from '../contexts/AuthContext';
 
 const KEY = 'token';
 const REMEMBER_ME = 'rememberMe';
+const YEAR = 365;
+const FOUR_HOURS = 4 / 24; // 4 hours
 
 const useAuth = () => {
   const { setAuth } = useContext(AuthContext);
@@ -13,12 +15,14 @@ const useAuth = () => {
 
   const signIn = (token) => {
     setAuth(true);
-    setCookie(KEY, token, rememberMe ? 365 : 4 / 24); // 4 hours or 1 year
+    setCookie(KEY, token, rememberMe ? YEAR : FOUR_HOURS);
     if (rememberMe) {
-      setCookie(REMEMBER_ME, true, 365);
+      setCookie(REMEMBER_ME, true, YEAR);
     }
   };
 
+  // Check if the user has checked the remember me checkbox
+  // and set the state accordingly
   useEffect(() => {
     setRememberMe(getCookie(REMEMBER_ME) ? true : false);
   }, []);
