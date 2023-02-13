@@ -51,6 +51,7 @@ DB_PORT=5432
 COOKIE_NAME=fullstack-dev-session
 COOKIE_SECRET=add-a-super-secret-string-here
 JWT_SECRET=super-secretive-token-string-here
+
 SENDGRID_API_KEY=your-sendgrid-api-key-here
 SENDGRID_EMAIL=email@domain.com
 SENDGRID_DOMAIN=http://localhost:3000
@@ -111,12 +112,12 @@ npm run start
 
 In an API without a session, you can implement "remember me" functionality by using JSON Web Tokens (JWTs) and cookies.
 
-When a user logs in and chooses not to be remembered (i.e., rememberMe is set to false), the API can return a JWT in the response that can be stored in localStorage. This JWT can be used to authenticate subsequent requests made by the user during the current session.
+When a user logs in and chooses not to be remembered (i.e., rememberMe is set to false), the API can return a JWT in the response that can be stored in browser cookie. This JWT can be used to authenticate subsequent requests made by the user during the current session.
 
-When the user closes the browser or the session expires, the JWT stored in localStorage will also be deleted. The next time the user visits the site, they will have to log in again and a new JWT will be issued.
+When the user closes the browser or the session expires, the JWT stored in browser cookie will also be deleted. The next time the user visits the site, they will have to log in again and a new JWT will be issued.
 
 However, if the user chooses to be remembered (i.e., rememberMe is set to true), the API can also set a cookie on the user's browser with a long expiration time. The value of the cookie can be a unique identifier for the user.
 
 On subsequent visits, the API can check for the presence of this cookie and use the value of the cookie to retrieve the user's JWT from the server. The JWT can then be stored in localStorage and used to authenticate subsequent requests made by the user during the current session.
 
-In this way, the user can remain logged in between visits as long as the rememberMe cookie is present and the JWT stored on the server has not expired. However, the user will still need to authenticate with each new session (i.e., when the browser is closed and re-opened).
+In this way, the user can remain logged in between visits as long as the rememberMe cookie is present and the JWT stored on the server has not expired.
