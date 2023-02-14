@@ -102,6 +102,14 @@ Then run npm install command
 npm install --save-dev
 ```
 
+Rename `.env-example` to `.env`
+
+Update `.env` details to match:
+
+```
+REACT_APP_API_URL=http://localhost:4000/api
+```
+
 Start the server
 
 ```
