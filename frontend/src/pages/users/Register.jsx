@@ -54,7 +54,7 @@ export default function Register() {
 
       <Errors errors={errors} />
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} data-testid="form">
         <p>
           <input
             placeholder="First Name"
@@ -62,6 +62,7 @@ export default function Register() {
             id="firstname"
             value={first_name}
             onChange={(e) => setFirstname(e.target.value)}
+            data-testid="firstname"
           />
         </p>
 
@@ -72,6 +73,7 @@ export default function Register() {
             id="lastname"
             value={last_name}
             onChange={(e) => setLastName(e.target.value)}
+            data-testid="lastname"
           />
         </p>
 
@@ -82,6 +84,7 @@ export default function Register() {
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            data-testid="email"
           />
         </p>
 
@@ -93,6 +96,7 @@ export default function Register() {
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            data-testid="password"
           />
         </p>
 
@@ -104,6 +108,7 @@ export default function Register() {
             id="confirm_password"
             value={confirm_password}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            data-testid="confirm_password"
           />
         </p>
 
@@ -113,6 +118,7 @@ export default function Register() {
             id="accept_terms"
             checked={accept_terms}
             onChange={(e) => setAcceptTerms(e.target.checked)}
+            data-testid="accept_terms"
           />
           <label htmlFor="accept_terms">
             I accept the <a href="#">terms of service</a>
@@ -120,7 +126,7 @@ export default function Register() {
         </p>
 
         <p>
-          <button type="submit" disabled={!accept_terms}>
+          <button type="submit" disabled={!accept_terms} data-testid="submit">
             Register
           </button>
         </p>

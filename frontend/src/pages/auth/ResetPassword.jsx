@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import useFetch from '../../lib/useFetch';
 
-export default function ForgotPasssword() {
+export default function ForgotPassword() {
   const navigate = useNavigate();
 
   const [password, setPassword] = useState('');

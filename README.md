@@ -40,21 +40,30 @@ Rename `.env-example` to `.env`
 Update `.env` details to match those you created above e.g:
 
 ```
+# Common variables
+DB_HOST=localhost
+DB_PORT=5432
 PORT=4000
-NODE_ENV=development
+
+# Development variables
 DB_USER=fullstack_user
 DB_PASSWORD=fullstack_user@*
 DB_NAME=fullstack_dev
-DB_HOST=localhost
-DB_PORT=5432
+
+# Test variables
+TEST_DB_USER=fullstack_test_user
+TEST_DB_PASSWORD=fullstack_test@*
+TEST_DB_NAME=fullstack_test
+
+NODE_ENV=development
 
 COOKIE_NAME=fullstack-dev-session
 COOKIE_SECRET=add-a-super-secret-string-here
 JWT_SECRET=super-secretive-token-string-here
 
-SENDGRID_API_KEY=your-sendgrid-api-key-here
-SENDGRID_EMAIL=email@domain.com
-SENDGRID_DOMAIN=http://localhost:3000
+SENDGRID_API_KEY=key-goes-here
+FROM_EMAIL=email-goes-here
+FRONTEND_DOMAIN=http://localhost:3000
 ```
 
 Create a user database record within pgadmin
@@ -107,7 +116,8 @@ Rename `.env-example` to `.env`
 Update `.env` details to match:
 
 ```
-REACT_APP_API_URL=http://localhost:4000/api
+VITE_API_URL=http://localhost:4000/api
+VITE_NODE_ENV=development
 ```
 
 Start the server

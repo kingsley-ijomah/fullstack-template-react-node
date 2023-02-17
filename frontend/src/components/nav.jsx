@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import useAuth from '../lib/useAuth';
+import { AuthContext } from '../contexts/AuthContext';
 
 export default function Nav() {
-  const { isSignedIn } = useAuth();
-
+  const auth = useContext(AuthContext);
   return (
     <div>
       <Link to="/">Home</Link>
-      {!isSignedIn() ? null : <Link to="/users"> | Users</Link>}
-      {isSignedIn() ? null : <Link to="/register"> | Register</Link>}
-      {!isSignedIn() ? <Link to="/login"> | Login</Link> : <Link to="/logout"> | Logout</Link>}
+
+      {!auth.isAuthenticated && (
+        <>
+          <Link to="/register">| Register</Link>
+          <Link to="/login">| Login</Link>
+        </>
+      )}
+
+      {auth.isAuthenticated && (
+        <>
+          <Link to="/users"> | Users</Link>
+          <Link to="/logout">| Logout</Link>
+        </>
+      )}
     </div>
   );
 }

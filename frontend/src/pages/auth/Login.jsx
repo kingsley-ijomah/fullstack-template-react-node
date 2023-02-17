@@ -13,6 +13,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
 
+  // get auth context
   const { signIn, rememberMe, setRememberMe } = useAuth();
 
   // use useFetch hook to make request to login user
@@ -47,7 +48,7 @@ export default function Login() {
 
       <Errors errors={errors} />
 
-      <form onSubmit={handleSubmit}>
+      <form data-testid="form" onSubmit={handleSubmit}>
         <p>
           <input
             type="email"
@@ -57,6 +58,7 @@ export default function Login() {
             placeholder="Email"
             autoComplete="off"
             onChange={(e) => setEmail(e.target.value)}
+            data-testid="email"
           />
         </p>
 
@@ -69,11 +71,14 @@ export default function Login() {
             placeholder="Password"
             autoComplete="off"
             onChange={(e) => setPassword(e.target.value)}
+            data-testid="password"
           />
         </p>
 
         <p>
-          <button type="submit">Login</button>
+          <button type="submit" data-testid="submit">
+            Login
+          </button>
         </p>
 
         <p>
@@ -84,14 +89,21 @@ export default function Login() {
               id="rememberMe"
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
+              data-testid="rememberMe"
             />
             Remember Me
           </label>
         </p>
       </form>
       <p>
-        Don't have an account? <Link to="/register">Register Here</Link> or{' '}
-        <Link to="/forgot-password">Forgot Password?</Link>
+        Don't have an account?{' '}
+        <Link to="/register" data-testid="register">
+          Register Here
+        </Link>{' '}
+        or{' '}
+        <Link to="/forgot-password" data-testid="forgot-password">
+          Forgot Password?
+        </Link>
       </p>
     </div>
   );

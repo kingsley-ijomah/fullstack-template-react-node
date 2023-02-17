@@ -2,11 +2,11 @@ const db = require('../config/database');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-exports.login = async (body) => {
+exports.login = async (body, environment) => {
   const { email, password } = body;
 
   // find user
-  const { rows } = await db.query('SELECT * FROM "users" WHERE email = $1', [email]);
+  const { rows } = await db.query('SELECT * FROM "users" WHERE email = $1', [email], environment);
   if (rows.length === 0) {
     throw new Error('Email or password is incorrect');
   }
@@ -25,18 +25,18 @@ exports.login = async (body) => {
   return token;
 };
 
-exports.active = async (token) => {
+exports.active = async (token, environment) => {
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  const { rows } = await db.query('SELECT * FROM "users" WHERE id = $1', [decoded.id]);
+  const { rows } = await db.query('SELECT * FROM "users" WHERE id = $1', [decoded.id], environment);
   return rows[0];
 };
 
-exports.forgotPassword = async (body) => {
+exports.forgotPassword = async (body, environment) => {
   
   const { email } = body;
   
   // // find user
-  const { rows } = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+  const { rows } = await db.query('SELECT * FROM users WHERE email = $1', [email], environment);
   if (rows.length === 0) {
     throw new Error('Email does not exist');
   }
@@ -49,7 +49,7 @@ exports.forgotPassword = async (body) => {
   return token;
 };
 
-exports.resetPassword = async (token, body) => {
+exports.resetPassword = async (token, body, environment) => {
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
   const { password, confirmPassword } = body;
 
@@ -68,7 +68,8 @@ exports.resetPassword = async (token, body) => {
 
   const { rows } = await db.query(
     'UPDATE "users" SET password = $1 WHERE id = $2 RETURNING *',
-    [hashedPassword, decoded.id]
+    [hashedPassword, decoded.id], 
+    environment
   );
   return rows[0];
 };

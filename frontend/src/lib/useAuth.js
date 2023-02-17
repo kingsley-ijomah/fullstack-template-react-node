@@ -44,7 +44,7 @@ const useAuth = () => {
     return (token ? true : false) && isTokenExpired(token);
   };
 
-  return { token, rememberMe, logOutOnClose, setRememberMe, isSignedIn, signIn, signOut };
+  return { token, rememberMe, setRememberMe, isSignedIn, signIn, signOut };
 };
 
 export default useAuth;

@@ -4,7 +4,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 exports.loginAuth = async (req, res) => {
   try {
-    const token = await authServices.login(req.body);
+    const token = await authServices.login(req.body, req.environment);
     req.session = { token: token }; // set cookie session
     return res.status(200).json({
       message: 'User logged in successfully!',
@@ -20,7 +20,7 @@ exports.loginAuth = async (req, res) => {
 exports.activeAuth = async (req, res) => {
   try {
     const token = req.session.token;
-    const user = await authServices.active(token);
+    const user = await authServices.active(token, req.environment);
     return res.status(200).json({
       message: 'User retrieved successfully!',
       user: user,
@@ -32,7 +32,7 @@ exports.activeAuth = async (req, res) => {
 
 exports.forgotPasswordAuth = async (req, res) => {
   try {
-    const token = await authServices.forgotPassword(req.body);
+    const token = await authServices.forgotPassword(req.body, req.environment);
     const url = `${process.env.FRONTEND_DOMAIN}/reset-password/?token=${token}`;
 
     const msg = {
@@ -68,7 +68,7 @@ exports.forgotPasswordAuth = async (req, res) => {
 exports.resetPasswordAuth = async (req, res) => {
   try {
     const token = req.params.token;
-    await authServices.resetPassword(token, req.body);
+    await authServices.resetPassword(token, req.body, req.environment);
     return res.status(200).json({
       message: 'Password reset successfully!',
     });

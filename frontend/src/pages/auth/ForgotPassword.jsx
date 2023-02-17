@@ -4,7 +4,7 @@ import Errors from '../../components/errors';
 import { useState } from 'react';
 import useFetch from '../../lib/useFetch';
 
-export default function ForgotPasssword() {
+export default function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState('');
@@ -41,7 +41,7 @@ export default function ForgotPasssword() {
 
       <p>{message}</p>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} data-testid="form">
         <p>
           <input
             type="email"
@@ -51,6 +51,7 @@ export default function ForgotPasssword() {
             placeholder="Email"
             autoComplete="off"
             onChange={(e) => setEmail(e.target.value)}
+            data-testid="email"
           />
         </p>
 
