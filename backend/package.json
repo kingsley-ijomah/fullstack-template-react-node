@@ -5,10 +5,15 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
+
     "create:test:db": "sh scripts/create_db.sh test",
     "create:dev:db": "sh scripts/create_db.sh dev",
+    
     "drop:test:db": "sh scripts/drop_db.sh test",
-    "drop:dev:db": "sh scripts/drop_db.sh dev"
+    "drop:dev:db": "sh scripts/drop_db.sh dev",
+
+    "create:test:schema": "sh scripts/create_schema.sh test",
+    "create:dev:schema": "sh scripts/create_schema.sh dev"
   },
   "keywords": [],
   "author": "",

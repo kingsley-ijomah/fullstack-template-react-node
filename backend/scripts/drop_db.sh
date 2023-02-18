@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Make this file executable by running the following command in the terminal:
-# chmod +x drop_db.sh
+# chmod +x scripts/drop_db.sh
 
 # source the .env file to set environment variables
 source .env

@@ -1,13 +1,13 @@
 // {env: {NODE_ENV: 'test'}}
 describe('Register', () => {  
   // test that submit is when terms are not accepted
-  // it('should not register a new user when terms are not accepted', () => {
-  //   // console.log('cypress env:', Cypress.env());
-  //   // navigate to register page
-  //   cy.visit('/register');
-  //   // check that submit is disabled
-  //   cy.get('[data-testid="submit"]').should('be.disabled');
-  // })
+  it('should not register a new user when terms are not accepted', () => {
+    // console.log('cypress env:', Cypress.env());
+    // navigate to register page
+    cy.visit('/register');
+    // check that submit is disabled
+    cy.get('[data-testid="submit"]').should('be.disabled');
+  })
 
   // test successful registration
   it('should register a new user and redirect to login page', () => {

@@ -22,6 +22,8 @@ Rename `.env-example` to `.env`
 Update `.env` details to match those you created above e.g:
 
 ```
+NODE_ENV=development
+
 # Common variables
 DB_HOST=localhost
 DB_PORT=5432
@@ -32,12 +34,13 @@ DB_USER=fullstack_user
 DB_PASSWORD=fullstack_user@*
 DB_NAME=fullstack_dev
 
+# name of your psql superuser
+PG_USER=postgres
+
 # Test variables
 TEST_DB_USER=fullstack_test_user
 TEST_DB_PASSWORD=fullstack_test@*
 TEST_DB_NAME=fullstack_test
-
-NODE_ENV=development
 
 COOKIE_NAME=fullstack-dev-session
 COOKIE_SECRET=add-a-super-secret-string-here
@@ -59,29 +62,11 @@ npm run create:test:db
 npm run create:dev:db
 ```
 
-Create a user database record within pgadmin
+Create the user schema, type in your terminal:
 
 ```
-CREATE EXTENSION pgcrypto WITH SCHEMA public;
-
-DROP TABLE IF EXISTS public."users";
-
-CREATE TABLE IF NOT EXISTS public."users"
-(
-    id uuid NOT NULL DEFAULT gen_random_uuid(),
-    first_name character varying(255) COLLATE pg_catalog."default",
-    last_name character varying(255) COLLATE pg_catalog."default",
-    email character varying(255) COLLATE pg_catalog."default",
-    password character varying(255) COLLATE pg_catalog."default",
-    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
-    "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
-    CONSTRAINT "users_pkey" PRIMARY KEY (id)
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public."users"
-    OWNER to fullstack_user;
+npm run create:test:schema
+npm run create:dev:schema
 ```
 
 Finally start your backend server with:
