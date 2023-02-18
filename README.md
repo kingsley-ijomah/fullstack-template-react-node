@@ -17,24 +17,6 @@ Then run npm install command
 npm install --save-dev
 ```
 
-> Be sure to have postgresql already installed
-
-Run this in your terminal:
-
-```
-psql
-```
-
-> Use below to create an example database, user, password.
-> substitute details below to match your chosen credentials
-
-```
-CREATE USER fullstack_user WITH PASSWORD 'fullstack_user@*';
-CREATE DATABASE fullstack_dev WITH OWNER fullstack_user;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO fullstack_user;
-\q
-```
-
 Rename `.env-example` to `.env`
 
 Update `.env` details to match those you created above e.g:
@@ -64,6 +46,17 @@ JWT_SECRET=super-secretive-token-string-here
 SENDGRID_API_KEY=key-goes-here
 FROM_EMAIL=email-goes-here
 FRONTEND_DOMAIN=http://localhost:3000
+```
+
+> Be sure to have postgresql already installed
+
+Now we are going to create test and dev databases in you pgAdmin
+
+Run this in your terminal:
+
+```
+npm run create:test:db
+npm run create:dev:db
 ```
 
 Create a user database record within pgadmin
