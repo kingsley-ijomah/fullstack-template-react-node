@@ -1,5 +1,8 @@
-// {env: {NODE_ENV: 'test'}}
-describe('Register', () => {  
+describe('Register', () => {
+  beforeEach(() => {
+    cy.resetTestDatabase();
+  });
+
   // test that submit is when terms are not accepted
   it('should not register a new user when terms are not accepted', () => {
     // console.log('cypress env:', Cypress.env());

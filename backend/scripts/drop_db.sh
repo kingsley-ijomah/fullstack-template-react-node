@@ -21,7 +21,7 @@ else
 fi
 
 # delete the database if it exists
-psql -d postgres -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = '${DB_NAME}'" | grep -q 1 && psql -d postgres -U postgres -c "DROP DATABASE ${DB_NAME}"
+psql -d postgres -U ${PG_SUPER_USER} -tc "SELECT 1 FROM pg_database WHERE datname = '${DB_NAME}'" | grep -q 1 && psql -d postgres -U postgres -c "DROP DATABASE ${DB_NAME}"
 
 # delete the user if it exists
-psql -d postgres -U postgres -tc "SELECT 1 FROM pg_roles WHERE rolname = '${DB_USER}'" | grep -q 1 && psql -d postgres -U postgres -c "DROP ROLE ${DB_USER}"
+psql -d postgres -U ${PG_SUPER_USER} -tc "SELECT 1 FROM pg_roles WHERE rolname = '${DB_USER}'" | grep -q 1 && psql -d postgres -U postgres -c "DROP ROLE ${DB_USER}"

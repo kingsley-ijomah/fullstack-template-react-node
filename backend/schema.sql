@@ -1,4 +1,5 @@
-CREATE TABLE IF NOT EXISTS public."users"
+DROP TABLE IF EXISTS users;
+CREATE TABLE public."users"
 (
     id uuid NOT NULL DEFAULT gen_random_uuid(),
     first_name VARCHAR(255) NOT NULL,

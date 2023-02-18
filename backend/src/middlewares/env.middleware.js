@@ -7,7 +7,7 @@ const addEnvironemt = (req, res, next) => {
     if (!process.env.NODE_ENV) {
       throw new Error('Oops! NODE_ENV is not set! contact your administrator.');
     }
-
+    
     // check if req.header('X-Environment') is set or empty
     if (!req.header('X-Environment') || req.header('X-Environment') === '') {
       // if not set, set it to process.env.NODE_ENV
@@ -16,7 +16,7 @@ const addEnvironemt = (req, res, next) => {
 
     // set req.environment to req.header('X-Environment')
     req.environment = req.header('X-Environment');
-
+  
     // continue to next middleware
     next();
   } catch (error) {

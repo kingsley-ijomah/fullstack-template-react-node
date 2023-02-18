@@ -35,7 +35,7 @@ DB_PASSWORD=fullstack_user@*
 DB_NAME=fullstack_dev
 
 # name of your psql superuser
-PG_USER=postgres
+PG_SUPER_USER=postgres
 
 # Test variables
 TEST_DB_USER=fullstack_test_user

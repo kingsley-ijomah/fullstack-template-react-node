@@ -23,3 +23,14 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('resetTestDatabase', () => {
+  // cy get request with headers
+  cy.request({
+    method: 'GET',
+    url: 'http://localhost:4000/api/reset-test-db',
+    headers: {
+      'X-Environment': Cypress.env('NODE_ENV'),
+    },
+  });
+});

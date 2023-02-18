@@ -11,9 +11,11 @@ app.use(cors());
 
 const authRoute = require('./routes/auth.routes');
 const userRoute = require("./routes/user.routes");
+const cypressRoute = require("./routes/cypress.routes");
 
 app.use('/api/', authRoute);
 app.use("/api/", userRoute);
+app.use("/api/", cypressRoute);
 
 app.use(
   cookieSession({

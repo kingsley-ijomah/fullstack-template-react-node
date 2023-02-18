@@ -3,9 +3,7 @@ import useAuth from './useAuth';
 
 const AxiosInstance = () => {
   const { token } = useAuth();
-
-  console.log('AxiosInstance', import.meta.env)
-
+  
   const headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,
