@@ -56,7 +56,7 @@ export default function ForgotPassword() {
         </p>
 
         <p>
-          <button type="submit" disabled={loading}>
+          <button type="submit" disabled={loading} data-testid="submit">
             {loading ? 'Loading...' : 'Submit'}
           </button>
         </p>

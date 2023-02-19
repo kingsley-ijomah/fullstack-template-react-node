@@ -1,5 +1,5 @@
 describe('Register', () => {
-  beforeEach(() => {
+  afterEach(() => {
     cy.resetTestDatabase();
   });
 

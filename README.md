@@ -95,7 +95,10 @@ Update `.env` details to match:
 
 ```
 VITE_API_URL=http://localhost:4000/api
+VITE_FRONTEND_URL=http://localhost:5173
+
 VITE_NODE_ENV=development
+VITE_TEST_NODE_ENV=test
 ```
 
 Start the server

@@ -11,7 +11,9 @@ export default function Errors(props) {
             border: '1px #fdccd solid',
             backgroundColor: '#feebec',
             width: '500px',
-          }} {...rest}>
+          }}
+          data-testid="error"
+          {...rest}>
           <p style={{ padding: '10px' }}>{errors.data}</p>
         </div>
       )}

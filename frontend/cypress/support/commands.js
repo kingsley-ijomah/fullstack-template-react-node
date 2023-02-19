@@ -1,36 +1,48 @@
 // ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
 // For more comprehensive examples of custom
 // commands please read more here:
 // https://on.cypress.io/custom-commands
 // ***********************************************
 //
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('resetTestDatabase', () => {
+import axios from 'axios';
+
+const getEnvironment = () => Cypress.env('NODE_ENV');
+const getBaseUrl = () => Cypress.env('API_BASE_URL');
+const randomEmail = () => `${Math.random().toString(36).substring(2, 15)}@test.com`;
+
+Cypress.Commands.add('callApi', (method, url, data = {}) => {
   // cy get request with headers
   cy.request({
-    method: 'GET',
-    url: 'http://localhost:4000/api/reset-test-db',
+    method: method,
+    url: `${getBaseUrl()}/${url}`,
     headers: {
-      'X-Environment': Cypress.env('NODE_ENV'),
+      'X-Environment': getEnvironment(),
     },
+    body: data,
   });
+});
+
+Cypress.Commands.add('resetTestDatabase', () => {
+  cy.callApi('GET', 'reset-test-db').then((response) => {
+    expect(response.status).to.eq(200);
+    expect(response.body.message).to.eq('Database reset successfully');
+  });
+});
+
+Cypress.Commands.add('registerUser', (submittedUser = {}) => {
+  // create user object
+  const user = {
+    first_name: 'Peter',
+    last_name: 'Obi',
+    email: randomEmail(),
+    password: '123456',
+    confirm_password: '123456',
+  };
+
+  // merge data with user
+  Object.assign(user, submittedUser);
+
+  // make request
+  cy.callApi('POST', 'users', user);
 });

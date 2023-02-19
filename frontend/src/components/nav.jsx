@@ -18,7 +18,7 @@ export default function Nav() {
       {auth.isAuthenticated && (
         <>
           <Link to="/users"> | Users</Link>
-          <Link to="/logout">| Logout</Link>
+          <Link to="/logout" data-testid="logout">| Logout</Link>
         </>
       )}
     </div>

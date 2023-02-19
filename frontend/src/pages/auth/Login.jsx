@@ -89,7 +89,7 @@ export default function Login() {
               id="rememberMe"
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
-              data-testid="rememberMe"
+              data-testid="remember-me"
             />
             Remember Me
           </label>

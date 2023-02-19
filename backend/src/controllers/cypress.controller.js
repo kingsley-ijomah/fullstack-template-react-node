@@ -8,6 +8,6 @@ exports.resets = async (req, res) => {
       console.error(err);
       return res.status(400).send(err.message);
     }
-    return res.status(200).send(stdout);
+    return res.status(200).send({ message: 'Database reset successfully'});
   });
 };
